@@ -1,0 +1,43 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.github.zellius'
+version '0.1.0'
+
+def repository_url = "https://github.com/Zellius"
+
+publishing {
+    publications {
+        PluginPublication(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId "$project.name"
+            version project.version
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    publications = ['PluginPublication']
+    pkg {
+        repo = 'maven'
+        name = project.name
+        desc = 'Android Gradle plugin generates App Shortcuts shortcuts.xml for build flavors with different applicationId.'
+        licenses = ['MIT']
+        websiteUrl = "$repository_url/${project.name}"
+        issueTrackerUrl = "$repository_url/${project.name}/issues"
+        vcsUrl = "$repository_url/${project.name}.git"
+
+        labels = ['android', 'shortcut', 'shortcuts', 'gradle', 'applicationId']
+
+        githubRepo = 'Zellius/android-shortcut-gradle-plugin'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = project.version
+            vcsTag = "v${project.version}"
+        }
+    }
+}

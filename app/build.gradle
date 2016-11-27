@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath "com.github.zellius:android-shortcut-gradle-plugin:${rootProject.version}"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.zellius.shortcut-helper'
+
+shortcutHelper.filePath = '../shortcut.xml'
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "ru.solodovnikov.shortcutgradlehelper"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        dev {
+            applicationIdSuffix "dev"
+        }
+        prod {
+            applicationId "ru.solodovnikov.shortcutgradlehelper.prod"
+        }
+    }
+}
