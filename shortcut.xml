@@ -1,0 +1,20 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut android:shortcutId="test1" android:enabled="true" android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/app_name" android:shortcutLongLabel="@string/app_name"
+        android:shortcutDisabledMessage="@string/app_name">
+        <intent android:action="android.intent.action.VIEW"
+            android:targetClass="ru.solodovnikov.shortcuthelper.MainActivity" />
+        <intent android:action="android.intent.action.VIEW"
+            android:targetClass="ru.solodovnikov.shortcuthelper.SecondActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut android:shortcutId="test2" android:enabled="true" android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/app_name" android:shortcutLongLabel="@string/app_name"
+        android:shortcutDisabledMessage="@string/app_name">
+        <intent android:action="android.intent.action.VIEW"
+            android:targetClass="ru.solodovnikov.shortcuthelper.MainActivity" />
+        <intent android:action="android.intent.action.VIEW"
+            android:targetClass="ru.solodovnikov.shortcuthelper.SecondActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

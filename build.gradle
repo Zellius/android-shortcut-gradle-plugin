@@ -1,0 +1,25 @@
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+
+    compileOnly "com.android.tools.build:gradle:2.2.2"
+}
+
+group = 'com.github.zellius'
+version '0.1.0'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
