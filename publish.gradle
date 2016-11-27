@@ -6,13 +6,62 @@ version '0.1.0'
 
 def repository_url = "https://github.com/Zellius"
 
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier 'groovydoc'
+    from groovydoc.destinationDir
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives groovydocJar
+    archives javadocJar
+}
+
 publishing {
     publications {
         PluginPublication(MavenPublication) {
             from components.java
+            artifact sourcesJar
+            artifact groovydocJar
+            artifact javadocJar
+
             groupId project.group
             artifactId "$project.name"
             version project.version
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Android Shortcut Gradle Plugin')
+                root.appendNode('description', 'Android Gradle plugin generates App Shortcuts shortcuts.xml for build flavors with different applicationId.')
+                root.appendNode('url', "$repository_url/${project.name}")
+                root.appendNode('inceptionYear', '2016')
+
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', "$repository_url/${project.name}")
+                scm.appendNode('connection', "scm:https://zellius@github.com/zellius/${project.name}.git")
+                scm.appendNode('developerConnection', "scm:git://github.com/zellius/${project.name}.git")
+
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'MIT')
+                license.appendNode('url', "https://raw.github.com/zellius/${project.name}/master/LICENSE")
+                license.appendNode('distribution', 'repo')
+
+                def developers = root.appendNode('developers')
+                def developer = developers.appendNode('developer')
+                developer.appendNode('id', 'zellius')
+                developer.appendNode('name', 'Sergey Solodovnikov')
+                developer.appendNode('email', 'elementa.ru@gmail.com')
+            }
         }
     }
 }
