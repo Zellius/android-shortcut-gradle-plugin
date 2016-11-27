@@ -7,6 +7,10 @@ buildscript {
     }
 }
 
+repositories {
+    jcenter()
+}
+
 apply plugin: 'groovy'
 apply from: './publish.gradle'
 
