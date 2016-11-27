@@ -1,5 +1,15 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+    }
+}
+
 apply plugin: 'groovy'
-apply plugin: 'maven-publish'
+apply from: './publish.gradle'
+
 
 dependencies {
     compile localGroovy()
@@ -7,18 +17,6 @@ dependencies {
 
     compileOnly "com.android.tools.build:gradle:2.2.2"
 }
-
-group = 'com.github.zellius'
-version '0.1.0'
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir
