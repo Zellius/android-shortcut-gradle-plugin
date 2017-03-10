@@ -2,30 +2,11 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.github.zellius'
-version '0.1.0'
+version '0.1.1'
 
 def repository_url = "https://github.com/Zellius"
 
-task sourcesJar(type: Jar) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-task groovydocJar(type: Jar, dependsOn: groovydoc) {
-    classifier 'groovydoc'
-    from groovydoc.destinationDir
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives groovydocJar
-    archives javadocJar
-}
+def lib_description = 'Android Gradle plugin generates App Shortcuts shortcuts.xml for build flavors with different applicationId.'
 
 publishing {
     publications {
@@ -41,8 +22,8 @@ publishing {
 
             pom.withXml {
                 def root = asNode()
-                root.appendNode('name', 'Android Shortcut Gradle Plugin')
-                root.appendNode('description', 'Android Gradle plugin generates App Shortcuts shortcuts.xml for build flavors with different applicationId.')
+                root.appendNode('name', project.name)
+                root.appendNode('description', lib_description)
                 root.appendNode('url', "$repository_url/${project.name}")
                 root.appendNode('inceptionYear', '2016')
 
@@ -73,7 +54,7 @@ bintray {
     pkg {
         repo = 'maven'
         name = project.name
-        desc = 'Android Gradle plugin generates App Shortcuts shortcuts.xml for build flavors with different applicationId.'
+        desc = lib_description
         licenses = ['MIT']
         websiteUrl = "$repository_url/${project.name}"
         issueTrackerUrl = "$repository_url/${project.name}/issues"
@@ -89,4 +70,25 @@ bintray {
             vcsTag = "v${project.version}"
         }
     }
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier 'groovydoc'
+    from groovydoc.destinationDir
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives groovydocJar
+    archives javadocJar
 }

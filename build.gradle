@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
 
@@ -14,14 +14,9 @@ repositories {
 apply plugin: 'groovy'
 apply from: './publish.gradle'
 
-
 dependencies {
     compile localGroovy()
     compile gradleApi()
 
-    compileOnly "com.android.tools.build:gradle:2.2.2"
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    compileOnly "com.android.tools.build:gradle:2.3.0"
 }
