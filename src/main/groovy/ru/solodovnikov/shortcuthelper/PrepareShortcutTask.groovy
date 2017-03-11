@@ -28,6 +28,8 @@ class PrepareShortcutTask extends DefaultTask {
         }
         outputDir.mkdirs()
         def xmlUtil = new XmlUtil()
-        xmlUtil.serialize(shortcuts, new FileWriter(project.file("$outputDir/${shortcutFile.name}")))
+        def fw = new FileWriter(project.file("$outputDir/${shortcutFile.name}"))
+        xmlUtil.serialize(shortcuts, fw)
+        fw.close()
     }
 }
