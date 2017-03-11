@@ -43,7 +43,7 @@ buildscript {
           jcenter()
       }
       dependencies {
-          classpath 'com.github.zellius:android-shortcut-gradle-plugin:0.1.0'
+          classpath 'com.github.zellius:android-shortcut-gradle-plugin:0.1.1'
       }
 }
 
