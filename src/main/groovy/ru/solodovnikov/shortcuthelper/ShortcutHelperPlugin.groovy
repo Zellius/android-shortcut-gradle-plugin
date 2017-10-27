@@ -25,7 +25,7 @@ class ShortcutHelperPlugin implements Plugin<Project> {
                     it.shortcutFile = extension.filePath
                     it.applicationId = applicationId
                 }
-                it.registerResGeneratingTask(task, outputDir)
+                it.registerGeneratedResFolders(project.files(outputDir).builtBy(task))
             }
         }
     }

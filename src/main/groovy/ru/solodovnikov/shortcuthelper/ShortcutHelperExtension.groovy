@@ -4,7 +4,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 
 class ShortcutHelperExtension {
-    public static final String EXTENSION_NAME = "shortcutHelper";
+    public static final String EXTENSION_NAME = "shortcutHelper"
 
     //Path to the shortcut.xml
     File filePath
