@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "com.github.zellius:android-shortcut-gradle-plugin:${rootProject.version}"
     }
 }
@@ -14,7 +14,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.github.zellius.shortcut-helper'
 
 shortcutHelper.filePath = '../shortcut.xml'
-
 
 android {
     compileSdkVersion 26
