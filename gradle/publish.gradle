@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.github.zellius'
-version '0.1.1'
+version VERSION_NAME
 
 def repository_url = "https://github.com/Zellius"
 
