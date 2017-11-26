@@ -6,13 +6,9 @@ import com.android.build.gradle.api.BaseVariant
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.file.FileCollection
-import org.gradle.api.initialization.dsl.ScriptHandler
 import org.gradle.api.internal.DefaultDomainObjectSet
 
 class ShortcutHelperPlugin implements Plugin<Project> {
-    private static final String ANDROID_TOOLS_PLUGIN = 'com.android.tools.build'
-
     private ShortcutHelperExtension extension
 
     @Override
@@ -29,11 +25,15 @@ class ShortcutHelperPlugin implements Plugin<Project> {
                     it.applicationId = applicationId
                 }
 
-                if (getAndroidToolsMajorVersion(project) >= 3) {
-                    it.registerGeneratedResFolders(project.files(outputDir).builtBy(task))
-                } else {
-                    it.registerResGeneratingTask(task, outputDir)
+                it.metaClass.methodMissing = { String name, args = [:] ->
+                    if (name == "registerGeneratedResFolders") {
+                        it.registerResGeneratingTask(task, outputDir)
+                    } else {
+                        throw GradleException("Method $name is missing")
+                    }
+
                 }
+                it.registerGeneratedResFolders(project.files(outputDir).builtBy(task))
             }
         }
     }
@@ -48,14 +48,5 @@ class ShortcutHelperPlugin implements Plugin<Project> {
         } else {
             throw new GradleException("Set android build types first")
         }
-    }
-
-    private int getAndroidToolsMajorVersion(Project project) {
-        return project.buildscript
-                .configurations[ScriptHandler.CLASSPATH_CONFIGURATION]
-                .dependencies
-                .find { it.group == ANDROID_TOOLS_PLUGIN }
-                .version[0]
-                .toInteger()
     }
 }

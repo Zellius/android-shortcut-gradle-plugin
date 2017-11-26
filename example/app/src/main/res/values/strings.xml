@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Shortcuthelper Example</string>
+    <string name="app_name">ShortcutGradleHelper</string>
+    <string name="main_label">Main</string>
+    <string name="second_label">Second</string>
 </resources>
