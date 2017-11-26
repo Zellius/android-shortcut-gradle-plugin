@@ -9,7 +9,6 @@ import org.gradle.api.Project
 import org.gradle.api.internal.DefaultDomainObjectSet
 
 class ShortcutHelperPlugin implements Plugin<Project> {
-
     private ShortcutHelperExtension extension
 
     @Override
@@ -25,7 +24,16 @@ class ShortcutHelperPlugin implements Plugin<Project> {
                     it.shortcutFile = extension.filePath
                     it.applicationId = applicationId
                 }
-                it.registerResGeneratingTask(task, outputDir)
+
+                it.metaClass.methodMissing = { String name, args = [:] ->
+                    if (name == "registerGeneratedResFolders") {
+                        it.registerResGeneratingTask(task, outputDir)
+                    } else {
+                        throw GradleException("Method $name is missing")
+                    }
+
+                }
+                it.registerGeneratedResFolders(project.files(outputDir).builtBy(task))
             }
         }
     }

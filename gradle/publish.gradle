@@ -1,8 +1,9 @@
+apply from: './gradle/version.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.github.zellius'
-version '0.1.1'
+version plugin_version
 
 def repository_url = "https://github.com/Zellius"
 
@@ -91,4 +92,14 @@ artifacts {
     archives sourcesJar
     archives groovydocJar
     archives javadocJar
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri(repo_name))
+        }
+    }
 }

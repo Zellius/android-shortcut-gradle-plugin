@@ -1,4 +1,4 @@
-package ru.solodovnikov.shortcuthelper;
+package ru.solodovnikov.shortcuthelper.example;
 
 import android.app.Activity;
 

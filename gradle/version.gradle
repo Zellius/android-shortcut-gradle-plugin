@@ -1,0 +1,4 @@
+ext {
+    repo_name = 'local_repo'
+    plugin_version = '0.1.2'
+}
