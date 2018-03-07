@@ -9,11 +9,10 @@ import org.gradle.api.Project
 import org.gradle.api.internal.DefaultDomainObjectSet
 
 class ShortcutHelperPlugin implements Plugin<Project> {
-    private ShortcutHelperExtension extension
 
     @Override
     void apply(Project project) {
-        extension = project.extensions.create(ShortcutHelperExtension.EXTENSION_NAME, ShortcutHelperExtension, project)
+        def extension = project.extensions.create(ShortcutHelperExtension.EXTENSION_NAME, ShortcutHelperExtension, project)
 
         project.afterEvaluate {
             getProjectBuildVariants(project).all {
@@ -25,20 +24,20 @@ class ShortcutHelperPlugin implements Plugin<Project> {
                     it.applicationId = applicationId
                 }
 
-                it.metaClass.methodMissing = { String name, args = [:] ->
+                def actualMethodMissing = it.metaClass.methodMissing
+                it.metaClass.methodMissing = { String name, args ->
                     if (name == "registerGeneratedResFolders") {
                         it.registerResGeneratingTask(task, outputDir)
                     } else {
-                        throw GradleException("Method $name is missing")
+                        actualMethodMissing.invokeMethod(name, args)
                     }
-
                 }
                 it.registerGeneratedResFolders(project.files(outputDir).builtBy(task))
             }
         }
     }
 
-    private DefaultDomainObjectSet<? extends BaseVariant> getProjectBuildVariants(Project project) {
+    private static DefaultDomainObjectSet<? extends BaseVariant> getProjectBuildVariants(Project project) {
         if (project.plugins.hasPlugin("android")) {
             final AppExtension appExtension = project['android']
             return appExtension.getApplicationVariants()
